@@ -20,8 +20,8 @@ class ServiceTile extends StatelessWidget {
           children: <Widget>[
             const Text('Service'),
             Text('0x${service.uuid.toString().toUpperCase().substring(4, 8)}',
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: Theme.of(context).textTheme.caption?.color))
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).textTheme.bodySmall?.color))
           ],
         ),
         children: characteristicTiles,

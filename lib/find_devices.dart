@@ -9,6 +9,26 @@ import 'device_screen.dart';
 class FindDevicesScreen extends StatelessWidget {
   const FindDevicesScreen({Key? key}) : super(key: key);
 
+  List<BluetoothDevice> getRefinedDevices(List<BluetoothDevice> devices) {
+    List<BluetoothDevice> refinedDevices = [];
+    for (BluetoothDevice device in devices) {
+      if (device.name.startsWith('J1810G')) {
+        refinedDevices.add(device);
+      }
+    }
+    return refinedDevices;
+  }
+
+  List<ScanResult> getRefinedResults(List<ScanResult> results) {
+    List<ScanResult> refinedResults = [];
+    for (ScanResult result in results) {
+      if (result.device.name.startsWith('J1810G')) {
+        refinedResults.add(result);
+      }
+    }
+    return refinedResults;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +58,7 @@ class FindDevicesScreen extends StatelessWidget {
                     .asyncMap((_) => FlutterBluePlus.instance.connectedDevices),
                 initialData: const [],
                 builder: (c, snapshot) => Column(
-                  children: snapshot.data!
+                  children: getRefinedDevices(snapshot.data!)
                       .map((d) => ListTile(
                             title: Text(d.name),
                             subtitle: Text(d.id.toString()),
@@ -67,7 +87,7 @@ class FindDevicesScreen extends StatelessWidget {
                 stream: FlutterBluePlus.instance.scanResults,
                 initialData: const [],
                 builder: (c, snapshot) => Column(
-                  children: snapshot.data!
+                  children: getRefinedResults(snapshot.data!)
                       .map(
                         (r) => ScanResultTile(
                           result: r,
